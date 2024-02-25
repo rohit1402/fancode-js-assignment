@@ -6,15 +6,20 @@ const port = config.server.port;
 
 app.use(express.json());
 //Register routes
-helper
-    .fileList('./src/routes')
-    .forEach(filePath => require(`./${filePath.toString()}`)(app));
+const testFilePattern = /\.test\.js$/;
+helper.fileList('./src/routes')
+    .forEach((filePath) => {
+      if (!testFilePattern.test(filePath)) {
+        require(`./${filePath.toString()}`)(app)
+      }
+    });
 
 // Start the server
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
 module.exports = {
-  app: app
+  app: app,
+  server: server,
 }

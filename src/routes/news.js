@@ -5,7 +5,7 @@ module.exports = function (app) {
         try {
             const data = req.body;
             const result = await News.createNews(data);
-            return res.status(201)
+            return res.status(200)
                 .json({
                     message: 'News created successfully',
                     newsId: result.insertId,
